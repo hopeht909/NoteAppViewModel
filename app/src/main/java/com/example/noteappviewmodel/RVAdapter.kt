@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noteappviewmodel.data.Note
-import com.example.noteappviewmodel.database.NoteEntity
 import com.example.noteappviewmodel.databinding.NoteRowBinding
 
 class RVAdapter(private val activity: MainActivity): RecyclerView.Adapter<RVAdapter.ItemViewHolder>() {
