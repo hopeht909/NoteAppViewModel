@@ -3,11 +3,12 @@ package com.example.noteappviewmodel
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.noteappviewmodel.data.Note
 import com.example.noteappviewmodel.database.NoteEntity
 import com.example.noteappviewmodel.databinding.NoteRowBinding
 
 class RVAdapter(private val activity: MainActivity): RecyclerView.Adapter<RVAdapter.ItemViewHolder>() {
-    private var notes = emptyList<NoteEntity>()
+    private var notes = emptyList<Note>()
 
     class ItemViewHolder(val binding: NoteRowBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -33,7 +34,7 @@ class RVAdapter(private val activity: MainActivity): RecyclerView.Adapter<RVAdap
 
     override fun getItemCount() = notes.size
 
-    fun update(notes: List<NoteEntity>){
+    fun update(notes: List<Note>){
         println("UPDATING DATA")
         this.notes = notes
         notifyDataSetChanged()

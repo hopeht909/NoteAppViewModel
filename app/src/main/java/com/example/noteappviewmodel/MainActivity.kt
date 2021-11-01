@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.noteappviewmodel.data.Note
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,11 +22,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rvAdapter:RVAdapter
 
     lateinit var mainViewModel: MyViewModel
+    lateinit var notes: ArrayList<Note>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        notes = arrayListOf()
         mainViewModel = ViewModelProvider(this).get(MyViewModel::class.java)
         mainViewModel.getNotes().observe(
             this,
@@ -42,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         btSubmit.setOnClickListener {
             if(tvNewNote.text.isNotBlank() ){
                 val newNote = tvNewNote.text.toString()
-                mainViewModel.addNote(newNote)
+                mainViewModel.addNote(Note("", newNote))
                 tvNewNote.text.clear()
                 tvNewNote.clearFocus()
                 Toast.makeText(this, "Note Added", Toast.LENGTH_LONG).show()
@@ -53,11 +56,11 @@ class MainActivity : AppCompatActivity() {
         rvAdapter = RVAdapter(this)
         rvNotes.adapter = rvAdapter
         rvNotes.layoutManager = LinearLayoutManager(this)
-
+        mainViewModel.getData()
     }
 
 
-    fun raiseDialog(id: Int){
+    fun raiseDialog(id: String){
         val dialogBuilder = AlertDialog.Builder(this)
         val updatedNote = EditText(this)
         updatedNote.hint = "Enter new text"
@@ -79,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         alert.setView(updatedNote)
         alert.show()
     }
-    fun checkDeleteDialog(id: Int){
+    fun checkDeleteDialog(id: String){
         val dialogBuilder = AlertDialog.Builder(this)
         val checkTextView = TextView(this)
         checkTextView.text = "  Are sure you want to delete this note ?!"
